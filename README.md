@@ -41,8 +41,8 @@ This project implements the classic **8-puzzle problem** using **A\*** search al
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd 8-puzzle
+   git clone https://github.com/CSDCBB26/intro_ai-ds_exercise1.git
+   cd intro_ai-ds_exercise1
    ```
 
 2. Install dependencies:
