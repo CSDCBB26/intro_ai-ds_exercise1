@@ -15,6 +15,7 @@ def hamming_distance(board):
                 distance += 1
     return distance
 
+
 def manhattan_distance(board):
     """
     The Manhattan distance heuristic calculates the sum of the absolute differences between the current and goal positions of each tile.
@@ -24,7 +25,7 @@ def manhattan_distance(board):
     :param board: 2D list representing the puzzle state.
     :return: Manhattan distance.
     """
-    goal_positions = {1: (0, 0), 2: (0, 1), 3: (0, 2), 4: (1, 0), 5: (1, 1), 6: (1, 2), 7: (2, 0), 8: (2, 1),0: (2, 2)}
+    goal_positions = {1: (0, 0), 2: (0, 1), 3: (0, 2), 4: (1, 0), 5: (1, 1), 6: (1, 2), 7: (2, 0), 8: (2, 1), 0: (2, 2)}
     distance = 0
     for i in range(3):
         for j in range(3):

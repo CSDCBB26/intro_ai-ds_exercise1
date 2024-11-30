@@ -1,7 +1,8 @@
 import unittest
+
 from puzzle.board import Board
-from puzzle.solver import Solver
 from puzzle.heuristics import hamming_distance, manhattan_distance
+from puzzle.solver import Solver
 
 
 class TestSolver(unittest.TestCase):

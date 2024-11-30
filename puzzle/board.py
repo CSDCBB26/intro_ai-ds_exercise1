@@ -1,5 +1,6 @@
 import random
 
+
 class Board:
     def __init__(self, board=None):
         """
@@ -20,8 +21,6 @@ class Board:
         """
         board = [tiles[i * 3:(i + 1) * 3] for i in range(3)]
         return cls(board)
-
-
 
     @staticmethod
     def is_solvable(numbers):
@@ -51,12 +50,12 @@ class Board:
                 board = [numbers[i * 3:(i + 1) * 3] for i in range(3)]
                 return cls(board)
 
-
     def get_dimensions(self):
         """
         Returns the dimensions of the board.
 
-        :return: A tuple (rows, columns) representing the dimensions of the board.
+        :return: tuple
+            A tuple (rows, columns) representing the dimensions of the board.
         """
         return len(self.board), len(self.board[0])
 
@@ -64,34 +63,45 @@ class Board:
         """
         Returns a flattened list of all tiles in the board.
 
-        :return: A list of integers representing the tiles in the board.
+        :return: list
+            A list of integers representing the tiles in the board.
         """
         return [tile for row in self.board for tile in row]
 
     def get_state(self):
         """
         Returns the current board state.
-        :return:
+
+        :return: list
+            A 2D list representing the current state of the board.
         """
         return [row[:] for row in self.board]
 
     def __iter__(self):
         """
         Allows for iterating over the board.
-        :return: An iterator for the board.
+
+        :return: iterator
+            An iterator for the board.
         """
         return iter(self.board)
 
     def __getitem__(self, index):
         """
         Returns the row at the specified index.
-        :param index:
-        :return: The row at the specified index.
+
+        :param index: int
+            The index of the row to retrieve.
+        :return: list
+            The row at the specified index.
         """
         return self.board[index]
 
     def __str__(self):
-            """
-            Returns a string representation of the board.
-            """
-            return '\n'.join(' '.join(map(str, row)) for row in self.board)
+        """
+        Returns a string representation of the board.
+
+        :return: str
+            A string representation of the board.
+        """
+        return '\n'.join(' '.join(map(str, row)) for row in self.board)

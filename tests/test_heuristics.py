@@ -1,5 +1,7 @@
 import unittest
+
 from puzzle.heuristics import hamming_distance, manhattan_distance
+
 
 class TestHeuristics(unittest.TestCase):
 
@@ -39,6 +41,7 @@ class TestHeuristics(unittest.TestCase):
             hamming_distance(False)
         with self.assertRaises(TypeError):
             manhattan_distance(False)
+
 
 if __name__ == '__main__':
     unittest.main()
