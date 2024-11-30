@@ -1,6 +1,7 @@
 numpy
 psutil
 matplotlib
+tabulate
 pytest
 pytest-cov
 flake8
