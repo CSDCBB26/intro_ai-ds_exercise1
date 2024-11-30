@@ -11,6 +11,18 @@ class Board:
         else:
             self.board = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]  # Default goal state
 
+    @classmethod
+    def from_tiles(cls, tiles):
+        """
+        Alternative constructor to initialize the board from a list of tiles.
+        :param tiles: List of tiles representing the puzzle state.
+        :return: An instance of the Board class.
+        """
+        board = [tiles[i * 3:(i + 1) * 3] for i in range(3)]
+        return cls(board)
+
+
+
     @staticmethod
     def is_solvable(numbers):
         """
@@ -40,24 +52,31 @@ class Board:
                 return cls(board)
 
 
-def get_dimensions(self):
-    """
-    Returns the dimensions of the board.
-
-    :return: A tuple (rows, columns) representing the dimensions of the board.
-    """
-    return len(self.board), len(self.board[0])
-
-def get_tiles(self):
-    """
-    Returns a flattened list of all tiles in the board.
-
-    :return: A list of integers representing the tiles in the board.
-    """
-    return [tile for row in self.board for tile in row]
-
-def __str__(self):
+    def get_dimensions(self):
         """
-        Returns a string representation of the board.
+        Returns the dimensions of the board.
+
+        :return: A tuple (rows, columns) representing the dimensions of the board.
         """
-        return '\n'.join(' '.join(map(str, row)) for row in self.board)
+        return len(self.board), len(self.board[0])
+
+    def get_tiles(self):
+        """
+        Returns a flattened list of all tiles in the board.
+
+        :return: A list of integers representing the tiles in the board.
+        """
+        return [tile for row in self.board for tile in row]
+
+    def get_state(self):
+        """
+        Returns the current board state.
+        :return:
+        """
+        return [row[:] for row in self.board]
+
+    def __str__(self):
+            """
+            Returns a string representation of the board.
+            """
+            return '\n'.join(' '.join(map(str, row)) for row in self.board)
