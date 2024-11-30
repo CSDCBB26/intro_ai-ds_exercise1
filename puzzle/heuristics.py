@@ -26,9 +26,10 @@ def manhattan_distance(board):
     """
     goal_positions = {1: (0, 0), 2: (0, 1), 3: (0, 2), 4: (1, 0), 5: (1, 1), 6: (1, 2), 7: (2, 0), 8: (2, 1), 0: (2, 2)}
     distance = 0
+    tiles = board.get_tiles()  # Use the get_tiles method to access the board's tiles
     for i in range(3):
         for j in range(3):
-            if board[i][j] != 0:
-                goal_i, goal_j = goal_positions[board[i][j]]
+            if tiles[i * 3 + j] != 0:
+                goal_i, goal_j = goal_positions[tiles[i * 3 + j]]
                 distance += abs(i - goal_i) + abs(j - goal_j)
     return distance
