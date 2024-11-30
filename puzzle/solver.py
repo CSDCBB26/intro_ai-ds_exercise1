@@ -1,125 +1,106 @@
-from heapq import heappop, heappush
+import heapq
 
-class AStarSearch:
-    def __init__(self, graph: dict, heuristic_values: dict):
+
+class Solver:
+    def __init__(self, board, heuristic):
         """
-        Initialize the A* Search class.
-
-        @param graph: The graph to search as a dictionary of adjacency lists.
-                      Each key is a node, and the value is a list of tuples (neighbor, edge_cost).
-        @param heuristic_values: Admissible heuristic values for each node.
+        Initializes the Solver with a board and heuristic function.
+        :param board: Instance of Board representing the puzzle state.
+        :param heuristic: Heuristic function to evaluate board states.
         """
-        self.graph = graph  # Graph representation as adjacency lists.
-        self.heuristic_values = heuristic_values  # Admissible heuristic values for nodes.
+        self.board = board  # Initial puzzle state
+        self.heuristic = heuristic  # Heuristic function (e.g., hamming_distance or manhattan_distance)
+        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]  # Goal configuration
 
-    def search(self, start: str, goal: str):
+    class Node:
+        def __init__(self, board, parent=None, g=0, h=0):
+            """
+            Represents a node in the A* search tree.
+            :param board: Current puzzle state (2D list).
+            :param parent: Parent Node instance (used to reconstruct solution path).
+            :param g: Cost from start to current node (path cost).
+            :param h: Estimated cost to the goal (heuristic cost).
+            """
+            self.board = board
+            self.parent = parent
+            self.g = g
+            self.h = h
+            self.f = g + h
+
+        def __lt__(self, other):
+            """Comparison operator for priority queue based on f-value."""
+            return self.f < other.f
+
+    def is_goal(self, board):
         """
-        Perform A* search from the start node to the goal node.
-
-        @param start: The starting node.
-        @param goal: The goal node.
-        @return: A tuple containing the total cost and the path from start to goal.
+        Checks if the board is in the goal state.
+        :param board: Current board state (2D list).
+        :return: True if board matches goal state, otherwise False.
         """
-        # Priority queue (open list) initialized with the start node.
-        # Each entry is a tuple: (f_score, g_score, node)
-        # f_score = g_score + heuristic value
-        open_list = [(self.heuristic_values[start], 0, start)]
+        return board == self.goal_state
 
-        # Dictionary to store the minimum cost to reach each node from the start.
-        g_scores = {start: 0}
-
-        # Dictionary to track the parent of each node for path reconstruction.
-        came_from = {}
-
-        # Main loop: Process nodes until the open list is empty or the goal is reached.
-        while open_list:
-            # Step 1: Remove the node with the smallest f_score from the priority queue.
-            f_score, g_score, current = heappop(open_list)
-
-            # Step 2: If the goal node is reached, reconstruct and return the path.
-            if current == goal:
-                return self._reconstruct_path(came_from, current, g_score)
-
-            # Step 3: Explore all neighbors of the current node.
-            for neighbor, edge_cost in self.graph.get(current, []):
-                # Calculate the tentative g_score for the neighbor.
-                # g_score represents the path cost from the start node to this neighbor.
-                tentative_g_score = g_score + edge_cost
-
-                # Step 4: Check if this path to the neighbor is better than any known path.
-                if tentative_g_score < g_scores.get(neighbor, float('inf')):
-                    # Update the g_score for this neighbor.
-                    g_scores[neighbor] = tentative_g_score
-
-                    # Calculate the total cost (f_score) for this neighbor.
-                    # f_score = g_score + heuristic value
-                    f_score = tentative_g_score + self.heuristic_values[neighbor]
-
-                    # Add the neighbor to the open list for further exploration.
-                    heappush(open_list, (f_score, tentative_g_score, neighbor))
-
-                    # Update the 'came_from' dictionary to track the parent node.
-                    # This is used later to reconstruct the path.
-                    came_from[neighbor] = current
-
-        # Step 5: If the open list is empty and the goal was not reached, return failure.
-        return -1, []  # No path found.
-
-    def _reconstruct_path(self, came_from: dict, current: str, g_score: int):
+    def get_neighbors(self, board):
         """
-        Reconstruct the path from the start node to the goal node.
-
-        @param came_from: Dictionary tracking the parent of each node.
-        @param current: The current (goal) node.
-        @param g_score: The total cost to reach the goal node.
-        @return: A tuple containing the total cost and the reconstructed path.
+        Generates valid neighbors by sliding tiles.
+        :param board: Current board state (2D list).
+        :return: List of new board states after valid moves.
         """
-        # Initialize the path list and backtrack from the goal to the start.
+        neighbors = []
+        zero_pos = next((i, j) for i, row in enumerate(board) for j, val in enumerate(row) if val == 0)
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Up, Down, Left, Right
+
+        for d in directions:
+            new_i, new_j = zero_pos[0] + d[0], zero_pos[1] + d[1]
+            if 0 <= new_i < 3 and 0 <= new_j < 3:
+                new_board = [row[:] for row in board]  # Deep copy
+                new_board[zero_pos[0]][zero_pos[1]], new_board[new_i][new_j] = (
+                    new_board[new_i][new_j],
+                    new_board[zero_pos[0]][zero_pos[1]],
+                )
+                neighbors.append(new_board)
+        return neighbors
+
+    def reconstruct_path(self, node):
+        """
+        Reconstructs the solution path from goal to start.
+        :param node: Goal node.
+        :return: List of boards from start to goal.
+        """
         path = []
-        while current:
-            path.append(current)  # Add the current node to the path.
-            current = came_from.get(current)  # Move to the parent node.
+        while node:
+            path.append(node.board)
+            node = node.parent
+        return path[::-1]
 
-        # Reverse the path to get the order from start to goal.
-        path.reverse()
-        return g_score, path
+    def solve(self):
+        """
+        Executes the A* search algorithm to solve the puzzle.
+        :return: Solution path and number of expanded nodes.
+        """
+        start_node = self.Node(self.board, h=self.heuristic(self.board))
+        open_list = []
+        heapq.heappush(open_list, start_node)
+        closed_set = set()
 
+        expanded_nodes = 0
 
-"""
-EXAMPLE_GRAPH = {
-    'S': [('A', 4), ('B', 10), ('C', 11)],
-    'A': [('B', 8), ('D', 5)],
-    'B': [('D', 15)],
-    'C': [('D', 8), ('E', 20), ('F', 2)],
-    'D': [('F', 1), ('I', 20), ('H', 16)],
-    'E': [('G', 19)],
-    'F': [('G', 13)],
-    'H': [('J', 2), ('I', 1)],
-    'I': [('K', 13), ('G', 5), ('J', 5)],
-    'J': [('K', 7)],
-    'K': [('G', 16)]
-}
+        while open_list:
+            current_node = heapq.heappop(open_list)
+            expanded_nodes += 1
 
-EXAMPLE_HEURISTIC_VALUES = {
-    'S': 7,
-    'A': 8,
-    'B': 6,
-    'C': 5,
-    'D': 5,
-    'E': 3,
-    'F': 3,
-    'G': 0,  # Goal node has a heuristic value of 0.
-    'H': 7,
-    'I': 4,
-    'J': 5,
-    'K': 3
-}
+            if self.is_goal(current_node.board):
+                return self.reconstruct_path(current_node)
 
-# Instantiate the AStarSearch class.
-astar = AStarSearch(EXAMPLE_GRAPH, EXAMPLE_HEURISTIC_VALUES)
+            closed_set.add(tuple(map(tuple, current_node.board)))
 
-# Perform the search.
-result_cost, result_path = astar.search('S', 'G')
-print(f"Cost: {result_cost}, Path: {result_path}")
+            for neighbor in self.get_neighbors(current_node.board):
+                if tuple(map(tuple, neighbor)) in closed_set:
+                    continue
 
-"""
+                g = current_node.g + 1
+                h = self.heuristic(neighbor)
+                neighbor_node = self.Node(neighbor, current_node, g, h)
+
+                heapq.heappush(open_list, neighbor_node)
+
+        return None  # If no solution is found
