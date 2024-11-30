@@ -6,6 +6,7 @@ This project implements the classic **8-puzzle problem** using **A\*** search al
 
 ## **Table of Contents**
 
+- [Task Description](#task-description)
 - [Features](#features)
 - [Project Structure](#project-structure)
 - [Setup](#setup)
@@ -13,6 +14,38 @@ This project implements the classic **8-puzzle problem** using **A\*** search al
 - [Results](#results)
 - [License](#license)
 - [Contributors](#contributors)
+
+---
+
+## **Task Description**
+
+The **8-puzzle problem** is a sliding puzzle that consists of a 3x3 grid with eight numbered tiles and one empty space. The goal is to rearrange the tiles by sliding them into the empty space to achieve a specific configuration. The puzzle is solved when the tiles are in the following order:
+
+```
+|---|---|---|
+| 1 | 2 | 3 |
+| 4 | 5 | 6 |
+| 7 | 8 |   |
+|---|---|---|
+```
+
+1. **Objective**: Solve the 8-puzzle using **A\*** search with:
+   - **Hamming Distance** heuristic.
+   - **Manhattan Distance** heuristic.
+
+2. **Steps**:
+   - Generate a **random solvable state** and define the **goal state**.
+   - Implement A\* search with the two heuristics.
+   - Run **100 random tests** for each heuristic.
+   - Measure **memory usage (expanded nodes)** and **runtime**.
+   - Compute **mean** and **standard deviation**.
+
+3. **Deliverables**:
+   - Code with clear modular structure and comments.
+   - Results table comparing the two heuristics.
+   - Documentation: task description, architecture diagram, design decisions, and conclusions.
+
+4. **Deadline**: **01.12.2024**
 
 ---
 
@@ -49,7 +82,7 @@ intro_ai_ds_exercise1/
 │   ├── test_heuristics.py# Tests for heuristics.py
 │   └── test_utils.py     # Tests for utils.py
 ├── experiments/          # Performance analysis and experiment scripts
-│   ├── [experiment.ipynb](experiment/experiment.ipynb)  # Jupter notebook for experiments with results
+│   ├── experiment.ipynb  # Jupter notebook for experiments with results
 ├── README.md             # Project overview, setup instructions, and usage
 ├── requirements.txt      # Python dependencies to install with pip
 ├── .gitignore            # Git ignore file for excluding unnecessary files
@@ -106,6 +139,6 @@ This project is for educational purposes. Feel free to use and adapt it.
 
 ## **Contributors**
 
-- [Judy Kardouh](@judyspica)
-- [Sergiu-Claudiu Iordanescu](@SergiucCl)
-- [Andreas Drozd](@dro42)
+- [Judy Kardouh](https://github.com/judyspica)
+- [Sergiu-Claudiu Iordanescu](https://github.com/SergiuCl)
+- [Andreas Drozd](https://github.com/dro42)
