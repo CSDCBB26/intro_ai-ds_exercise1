@@ -21,13 +21,10 @@ This project implements the classic **8-puzzle problem** using **A\*** search al
 
 The **8-puzzle problem** is a sliding puzzle that consists of a 3x3 grid with eight numbered tiles and one empty space. The goal is to rearrange the tiles by sliding them into the empty space to achieve a specific configuration. The puzzle is solved when the tiles are in the following order:
 
-```
-|---|---|---|
 | 1 | 2 | 3 |
 | 4 | 5 | 6 |
 | 7 | 8 |   |
-|---|---|---|
-```
+
 
 1. **Objective**: Solve the 8-puzzle using **A\*** search with:
    - **Hamming Distance** heuristic.
