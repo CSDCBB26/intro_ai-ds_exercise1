@@ -39,6 +39,12 @@ class Board:
                 board = [numbers[i * 3:(i + 1) * 3] for i in range(3)]
                 return cls(board)
 
+    def get_dimensions(self):
+        return (len(self.board), len(self.board[0]))
+
+    def get_tiles(self):
+        return [tile for row in self.board for tile in row]
+
     def __str__(self):
         """
         Returns a string representation of the board.

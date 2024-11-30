@@ -9,10 +9,10 @@ class Solver:
         :param board: Instance of Board representing the puzzle state.
         :param heuristic: Heuristic function to evaluate board states.
         """
-        if not board or len(board) != 3 or any(len(row) != 3 for row in board):
-            raise ValueError("Invalid board format. Board must be a 3x3 grid.")
-        if not Board.is_solvable([tile for row in board for tile in row]):
-            raise ValueError("Board configuration is unsolvable.")
+        if not board or board.get_dimensions() != (3, 3):
+            raise ValueError("Invalid board format. Board must be a 3x3 grid!")
+        if not Board.is_solvable(board.get_tiles()):
+            raise ValueError("The board is not solvable!")
         self.board = board # Initial puzzle state
         self.heuristic = heuristic # Heuristic function (e.g., hamming_distance or manhattan_distance)
         self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]] # Goal configuration
