@@ -37,7 +37,7 @@ class TestUtils(unittest.TestCase):
         expected_states = [
             [[1, 2, 3], [4, 0, 6], [7, 5, 8]],  # Move 0 up
             [[1, 2, 3], [4, 5, 6], [0, 7, 8]],  # Move 0 left
-            [[1, 2, 3], [4, 5, 6], [7, 8, 0]]   # Move 0 right
+            [[1, 2, 3], [4, 5, 6], [7, 8, 0]]  # Move 0 right
         ]
         actual_states = [neighbor.get_state() for neighbor in neighbors]
         self.assertTrue(all(state in expected_states for state in actual_states))

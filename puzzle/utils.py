@@ -1,5 +1,6 @@
 from puzzle.board import Board
 
+
 def generate_multiple_boards(count):
     """
     Generates multiple random solvable boards.
@@ -10,6 +11,7 @@ def generate_multiple_boards(count):
     for _ in range(count):
         boards.append(Board.generate_random())
     return boards
+
 
 def get_neighbors(board):
     """
