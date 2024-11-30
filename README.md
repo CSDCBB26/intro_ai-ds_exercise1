@@ -4,6 +4,18 @@ This project implements the classic **8-puzzle problem** using **A\*** search al
 
 ---
 
+## **Table of Contents**
+
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Setup](#setup)
+- [How It Works](#how-it-works)
+- [Results](#results)
+- [License](#license)
+- [Contributors](#contributors)
+
+---
+
 ## **Features**
 
 - **Solvability Check**: Determines whether a random puzzle configuration can be solved.
@@ -22,17 +34,25 @@ This project implements the classic **8-puzzle problem** using **A\*** search al
 ## **Project Structure**
 
 ```plaintext
-8-puzzle/
+intro_ai_ds_exercise1/
 ├── main.py               # Entry point for running the program
-├── puzzle/
+├── puzzle/               # Module containing core puzzle logic
+│   ├── __init__.py       # Makes the folder a Python package
 │   ├── board.py          # Puzzle representation and operations
-│   ├── solver.py         # A* search implementation
-│   ├── heuristics.py     # Heuristic functions
-│   └── utils.py          # Helper functions
-├── tests/                # Unit tests for components
-├── experiments/          # Scripts and results for performance analysis
-├── README.md             # Project overview (this file)
-├── requirements.txt      # Python dependencies
+│   ├── solver.py         # A* search algorithm implementation
+│   ├── heuristics.py     # Heuristic functions (Hamming and Manhattan)
+│   └── utils.py          # Utility functions (e.g., solvability checks)
+├── tests/                # Unit tests for core modules
+│   ├── __init__.py       # Makes the folder a Python package
+│   ├── test_board.py     # Tests for board.py
+│   ├── test_solver.py    # Tests for solver.py
+│   ├── test_heuristics.py# Tests for heuristics.py
+│   └── test_utils.py     # Tests for utils.py
+├── experiments/          # Performance analysis and experiment scripts
+│   ├── [experiment.ipynb](experiment/experiment.ipynb)  # Jupter notebook for experiments with results
+├── README.md             # Project overview, setup instructions, and usage
+├── requirements.txt      # Python dependencies to install with pip
+├── .gitignore            # Git ignore file for excluding unnecessary files
 ```
 
 ---
@@ -49,11 +69,11 @@ This project implements the classic **8-puzzle problem** using **A\*** search al
    ```bash
    pip install -r requirements.txt
    ```
-
-3. Run the program:
-   ```bash
-   python main.py
-   ```
+   
+    Check if the installation was successful by running the following command:
+    ```bash
+    pip list
+    ```
 
 ---
 
@@ -83,3 +103,9 @@ Results are averaged over 100 runs, and the report includes detailed comparisons
 This project is for educational purposes. Feel free to use and adapt it.
 
 ---
+
+## **Contributors**
+
+- [Judy Kardouh](@judyspica)
+- [Sergiu-Claudiu Iordanescu](@SergiucCl)
+- [Andreas Drozd](@dro42)
