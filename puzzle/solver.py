@@ -53,6 +53,7 @@ class Solver:
         self.board = board # Initial puzzle state
         self.heuristic = heuristic # Heuristic function (e.g., hamming_distance or manhattan_distance)
         self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]] # Goal configuration
+        self.expanded_nodes = 0
 
     class Node:
         def __init__(self, board, parent=None, g=0, h=0):
@@ -91,14 +92,12 @@ class Solver:
         heapq.heappush(open_list, start_node)
         closed_set = set()
 
-        expanded_nodes = 0
-
         while open_list:
             current_node = heapq.heappop(open_list)
-            expanded_nodes += 1
+            self.expanded_nodes += 1
 
             if self.is_goal(current_node.board.get_state()):
-                return reconstruct_path(current_node)
+                return reconstruct_path(current_node), self.expanded_nodes
 
             closed_set.add(tuple(map(tuple, current_node.board.get_state())))
 
@@ -112,4 +111,4 @@ class Solver:
 
                 heapq.heappush(open_list, neighbor_node)
 
-        return None  # If no solution is found
+        return None, self.expanded_nodes  # If no solution is found
