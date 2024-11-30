@@ -75,6 +75,21 @@ class Board:
         """
         return [row[:] for row in self.board]
 
+    def __iter__(self):
+        """
+        Allows for iterating over the board.
+        :return: An iterator for the board.
+        """
+        return iter(self.board)
+
+    def __getitem__(self, index):
+        """
+        Returns the row at the specified index.
+        :param index:
+        :return: The row at the specified index.
+        """
+        return self.board[index]
+
     def __str__(self):
             """
             Returns a string representation of the board.
