@@ -1,4 +1,5 @@
 import heapq
+from puzzle.board import Board
 
 
 class Solver:
@@ -8,9 +9,13 @@ class Solver:
         :param board: Instance of Board representing the puzzle state.
         :param heuristic: Heuristic function to evaluate board states.
         """
-        self.board = board  # Initial puzzle state
-        self.heuristic = heuristic  # Heuristic function (e.g., hamming_distance or manhattan_distance)
-        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]  # Goal configuration
+        if not board or len(board) != 3 or any(len(row) != 3 for row in board):
+            raise ValueError("Invalid board format. Board must be a 3x3 grid.")
+        if not Board.is_solvable([tile for row in board for tile in row]):
+            raise ValueError("Board configuration is unsolvable.")
+        self.board = board # Initial puzzle state
+        self.heuristic = heuristic # Heuristic function (e.g., hamming_distance or manhattan_distance)
+        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]] # Goal configuration
 
     class Node:
         def __init__(self, board, parent=None, g=0, h=0):
