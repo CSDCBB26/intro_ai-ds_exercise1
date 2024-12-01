@@ -1,5 +1,4 @@
 import heapq
-
 from puzzle.board import Board
 from puzzle.utils import reconstruct_path, get_neighbors
 
@@ -36,7 +35,9 @@ class Solver:
             self.f = g + h
 
         def __lt__(self, other):
-            """Comparison operator for priority queue based on f-value."""
+            """
+            Comparison operator for priority queue based on f-value.
+            """
             return self.f < other.f
 
     def is_goal(self, board):

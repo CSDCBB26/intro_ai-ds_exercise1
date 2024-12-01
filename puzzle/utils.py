@@ -1,18 +1,6 @@
 from puzzle.board import Board
 
 
-def generate_multiple_boards(count):
-    """
-    Generates multiple random solvable boards.
-    :param count: Number of boards to generate.
-    :return: List of Board instances.
-    """
-    boards = []
-    for _ in range(count):
-        boards.append(Board.generate_random())
-    return boards
-
-
 def get_neighbors(board):
     """
     Generates valid neighbors by sliding tiles.
@@ -47,4 +35,4 @@ def reconstruct_path(node):
     while node:
         path.append(node.board)
         node = node.parent
-    return path[::-1]
+    return path[::-1]  # Reverse the path to get start-to-goal order
