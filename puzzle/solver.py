@@ -14,9 +14,9 @@ class Solver:
             raise ValueError("Invalid board format. Board must be a 3x3 grid!")
         if not Board.is_solvable(board.get_tiles()):
             raise ValueError("The board is not solvable!")
-        self.board = board
-        self.heuristic = heuristic
-        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+        self.board = board  # Initial puzzle state
+        self.heuristic = heuristic  # Heuristic function (e.g., hamming_distance or manhattan_distance)
+        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]  # Goal configuration
         self.expanded_nodes = 0
 
     class Node:
