@@ -1,5 +1,4 @@
 import heapq
-
 from puzzle.board import Board
 from puzzle.utils import reconstruct_path, get_neighbors
 
@@ -15,9 +14,9 @@ class Solver:
             raise ValueError("Invalid board format. Board must be a 3x3 grid!")
         if not Board.is_solvable(board.get_tiles()):
             raise ValueError("The board is not solvable!")
-        self.board = board  # Initial puzzle state
-        self.heuristic = heuristic  # Heuristic function (e.g., hamming_distance or manhattan_distance)
-        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]  # Goal configuration
+        self.board = board
+        self.heuristic = heuristic
+        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
         self.expanded_nodes = 0
 
     class Node:
@@ -36,7 +35,9 @@ class Solver:
             self.f = g + h
 
         def __lt__(self, other):
-            """Comparison operator for priority queue based on f-value."""
+            """
+            Comparison operator for priority queue based on f-value.
+            """
             return self.f < other.f
 
     def is_goal(self, board):
