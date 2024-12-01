@@ -1,43 +1,44 @@
 import unittest
+
 from puzzle.board import Board
-from puzzle.solver import Solver
 from puzzle.heuristics import hamming_distance, manhattan_distance
+from puzzle.solver import Solver
 
 
 class TestSolver(unittest.TestCase):
 
     def test_solver_with_manhattan_distance(self):
         board = Board([[1, 2, 3], [4, 5, 6], [7, 8, 0]])  # Already solved
-        solver = Solver(board.board, manhattan_distance)
-        solution = solver.solve()
+        solver = Solver(board, manhattan_distance)
+        solution, expanded_nodes = solver.solve()
 
         self.assertEqual(len(solution), 1)
-        self.assertEqual(solution[0], [[1, 2, 3], [4, 5, 6], [7, 8, 0]])
+        self.assertEqual(solution[0].get_state(), [[1, 2, 3], [4, 5, 6], [7, 8, 0]])
 
     def test_solver_with_hamming_distance(self):
         board = Board([[1, 2, 3], [4, 5, 6], [7, 0, 8]])  # One move away
-        solver = Solver(board.board, hamming_distance)
-        solution = solver.solve()
+        solver = Solver(board, hamming_distance)
+        solution, expanded_nodes = solver.solve()
 
         self.assertEqual(len(solution), 2)
 
     def test_solver_on_unsolvable_board(self):
         board = Board([[1, 2, 3], [4, 5, 6], [8, 7, 0]])  # Unsolvable
         with self.assertRaises(ValueError):
-            solver = Solver(board.board, manhattan_distance)
+            solver = Solver(board, manhattan_distance)
 
     def test_solver_with_random_solvable_board(self):
         board = Board.generate_random()
-        solver = Solver(board.board, manhattan_distance)
-        solution = solver.solve()
+        solver = Solver(board, manhattan_distance)
+        solution, expanded_nodes = solver.solve()
 
         self.assertIsNotNone(solution)
-        self.assertEqual(solution[-1], [[1, 2, 3], [4, 5, 6], [7, 8, 0]])
+        self.assertEqual(solution[-1].get_state(), [[1, 2, 3], [4, 5, 6], [7, 8, 0]])
 
     def test_solver_solution_length(self):
         board = Board([[1, 2, 3], [4, 5, 6], [7, 0, 8]])  # One move away
-        solver = Solver(board.board, manhattan_distance)
-        solution = solver.solve()
+        solver = Solver(board, manhattan_distance)
+        solution, expanded_nodes = solver.solve()
 
         self.assertEqual(len(solution), 2)
 

@@ -1,5 +1,7 @@
 import unittest
+
 from puzzle.board import Board
+
 
 class TestBoard(unittest.TestCase):
 
@@ -28,6 +30,7 @@ class TestBoard(unittest.TestCase):
         board = Board()
         expected_str = "1 2 3\n4 5 6\n7 8 0"
         self.assertEqual(str(board), expected_str)
+
 
 if __name__ == '__main__':
     unittest.main()
