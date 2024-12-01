@@ -1,9 +1,10 @@
-import subprocess
-import time
 import statistics
+import time
+
 from puzzle.board import Board
-from puzzle.solver import Solver
 from puzzle.heuristics import hamming_distance, manhattan_distance
+from puzzle.solver import Solver
+
 
 def main():
     """
@@ -17,7 +18,7 @@ def main():
     """
     # Generate 100 random boards
     boards = [Board.generate_random() for _ in range(100)]
-    
+
     # Heuristics
     heuristics = {
         "Hamming": hamming_distance,
@@ -31,7 +32,7 @@ def main():
         print("---" * 20)
         print(f"Board {index + 1}:")
         print(board)
-        
+
         for heuristic_name, heuristic_func in heuristics.items():
             print(f"Evaluating with {heuristic_name} heuristic...")
 
@@ -40,7 +41,7 @@ def main():
             solver = Solver(board, heuristic_func)
             solution, memory_effort = solver.solve()
             end_time = time.time()
-            
+
             runtime = end_time - start_time
 
             # Store results
@@ -68,6 +69,7 @@ def main():
         print("\n")
 
         input("Press Enter to exit console...")
+
 
 if __name__ == "__main__":
     main()

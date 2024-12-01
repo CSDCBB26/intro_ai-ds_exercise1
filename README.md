@@ -80,10 +80,10 @@ intro_ai_ds_exercise1/
 │   ├── test_heuristics.py# Tests for heuristics.py
 │   └── test_utils.py     # Tests for utils.py
 ├── experiments/          # Performance analysis and experiment scripts
-│   ├── experiment.ipynb  # Jupter notebook for experiments with results
+│   └── experiment.ipynb  # Jupter notebook for experiments with results
 ├── README.md             # Project overview, setup instructions, and usage
 ├── requirements.txt      # Python dependencies to install with pip
-├── .gitignore            # Git ignore file for excluding unnecessary files
+└── .gitignore            # Git ignore file for excluding unnecessary files
 ```
 
 ---
